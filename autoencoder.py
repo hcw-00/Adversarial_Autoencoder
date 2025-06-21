@@ -2,6 +2,7 @@ import tensorflow as tf
 import numpy as np
 import datetime
 import os
+import argparse
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from tensorflow.examples.tutorials.mnist import input_data
@@ -185,5 +186,16 @@ def train(train_model):
                           save_path=tf.train.latest_checkpoint(results_path + '/' + all_results[-1] + '/Saved_models/'))
             generate_image_grid(sess, op=decoder_image)
 
+def str2bool(v):
+    """Convert a string to boolean for argparse."""
+    if isinstance(v, bool):
+        return v
+    return v.lower() in ('true', '1', 'yes')
+
+
 if __name__ == '__main__':
-    train(train_model=True)
+    parser = argparse.ArgumentParser(description="Autoencoder Train Parameter")
+    parser.add_argument('--train', '-t', type=str2bool, default=True,
+                        help='Set to True to train a new model, False to load weights and display image grid')
+    args = parser.parse_args()
+    train(train_model=args.train)

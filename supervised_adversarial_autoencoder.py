@@ -249,9 +249,16 @@ def train(train_model=True):
             generate_image_grid(sess, op=decoder_image)
 
 
+def str2bool(v):
+    """Convert a string to boolean for argparse."""
+    if isinstance(v, bool):
+        return v
+    return v.lower() in ('true', '1', 'yes')
+
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Autoencoder Train Parameter")
-    parser.add_argument('--train', '-t', type=bool, default=True,
+    parser.add_argument('--train', '-t', type=str2bool, default=True,
                         help='Set to True to train a new model, False to load weights and display image grid')
     args = parser.parse_args()
     train(train_model=args.train)
